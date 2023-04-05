@@ -1,5 +1,7 @@
-#include <iostream>
+#include <istream>
 #include <stdlib.h>
+#include "Canciones.h"
+
 using namespace std;
 
 /*menu de operacion de cancionses */
@@ -19,22 +21,23 @@ void opPlayList(){
         cin>>opCan;
         switch (opCan)
         {
-        case 1:
+        case 1:{}
             break;
-        case 2:
+        case 2:{}
             break;
-        case 3:
+        case 3:{}
             break;
-        case 4:
+        case 4:{}
             break;
-        case 5:
+        case 5:{}
             break;
-        case 6:
+        case 6:{}
             break;
-        case 7:
+        case 7:{}
             break;
-        default:    
+        default:{ 
             std::cout << "Opcion invalida" << std::endl;
+        }
             break;
         }
     }
@@ -53,18 +56,37 @@ void opCancion(){
         cin>>opCan;
         switch (opCan)
         {
-        case 1:
+        case 1:{
+            string nombre;
+            string path;
+            std::cout << "Ingresa el nombre de la nueva cancion: " << std::endl;
+            cin>> nombre;
+            std::cout << "Ingresa la ubicacion en el disco" << std::endl;
+            cin>> path;
+            Cancion* nuevo;
+            nuevo = new Cancion();
+            nuevo->setNombre(nombre);
+            std::cout << "carajo esta bien hasta aca" << std::endl;
+            }
             break;
-        case 2:
+        case 2:{
+            //asdasd
+        }
             break;
-        case 3:
+        case 3:{
+
+        }
             break;
-        case 4:
+        case 4:{
+
+        }
             break;
-        case 5:
+        case 5:{
+
+        }
             break;
-        default:    
-            std::cout << "Opcion invalida" << std::endl;
+        default:{    
+            std::cout << "Opcion invalida" << std::endl;}
             break;
         }
     }
@@ -87,26 +109,27 @@ void rep(){
         cin>>opCan;
         switch (opCan)
         {
-        case 1:
+        case 1:{}
             break;
-        case 2:
+        case 2:{}
             break;
-        case 3:
+        case 3:{}
             break;
-        case 4:
+        case 4:{}
             break;
-        case 5:
+        case 5:{}
             break;
-        case 6:
+        case 6:{}
             break;
-        case 7:
+        case 7:{}
             break;
-        default:    
-            std::cout << "Opcion invalida" << std::endl;
+        default:{    
+            std::cout << "Opcion invalida" << std::endl;}
             break;
         }
     }
 }
+
 
 int main()
 {
@@ -122,25 +145,30 @@ int main()
         cin>>opMenu;
         switch (opMenu)
         {
-        case 1:
+        case 1:{
             opCancion();
+        }
             break;
-        case 2:
+        case 2:{
             opPlayList();
+        }
             break;
-        case 3:
+        case 3:{
             rep();
+        }
             break;
-        case 4:
+        case 4:{}
             break;
-        case 5:
+        case 5:{}
             break;
-        default:
+        default:{
             std::cout << "$$$ Warning: Opcion no valida $$$" << std::endl;
+        }
             break;
         }
 
     }
 
+    
     return 0;
 }

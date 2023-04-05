@@ -6,29 +6,29 @@
 struct Cancion
 {
     Cancion* anterior;
-    Cancion* ultimo;
+    Cancion* siguiente;
     char* path;
     char* nombre;
     int pos;
 
-    Cancion(char* path){
-       this->path = path;
+    Cancion(){
+       
     }
 
-    void se anterior(Cancion* anterior){
-        this- anterior = anterior;
+    void setAnterior(Cancion* anterior){
+        this->anterior = anterior;
     }
 
-    Cancion* ge anterior(){
-        return this- anterior;
+    Cancion* getAnterior(){
+        return this->anterior;
     }
 
-    void setUltimo(Cancion* ultimo){
-        this->ultimo = ultimo;
+    void setSiguiente(Cancion* siguiente){
+        this->siguiente = siguiente;
     }
 
-    Cancion* getUltimo(){
-        return this->ultimo;
+    Cancion* getSiguiente(){
+        return this->siguiente;
     }
 
     void setPath(char* path){
@@ -53,5 +53,8 @@ struct Cancion
 
     int getPos(){
         return this->pos;
+    }
+    char* impresion(){
+        return path;
     }
 };

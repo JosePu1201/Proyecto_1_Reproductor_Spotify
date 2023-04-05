@@ -26,6 +26,7 @@ struct ListaCircular
 
         inicio = inicio->getAnterior();
     }
+
     void agregarFinal(Cancion* nuevo){
         nuevo->setAnterior(inicio->getAnterior());
         nuevo->setSiguiente(inicio);
@@ -33,12 +34,14 @@ struct ListaCircular
         inicio->getAnterior()->setSiguiente(nuevo);
         inicio->setAnterior(nuevo);
     }
+
     void imprimirSiguiente(Cancion* actual){
         cout<<actual->getNombre()<<endl;
         if(actual->getSiguiente()!= inicio){
             imprimirSiguiente(actual->getSiguiente());
         }
     }
+
     void imprimirTodo(){
         imprimirSiguiente(inicio);
     }
@@ -105,5 +108,5 @@ struct ListaCircular
     void eliminar(char* eliminar){
         eliminarEnLista(inicio,eliminar);
     }
-    
+
 };
