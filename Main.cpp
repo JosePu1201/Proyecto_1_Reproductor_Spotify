@@ -1,4 +1,4 @@
-#include <istream>
+#include <iostream>
 #include <stdlib.h>
 #include "Canciones.h"
 
@@ -65,7 +65,6 @@ void opCancion(){
             cin>> path;
             Cancion* nuevo;
             nuevo = new Cancion();
-            nuevo->setNombre(nombre);
             std::cout << "carajo esta bien hasta aca" << std::endl;
             }
             break;
