@@ -65,7 +65,11 @@ struct Cancion
     void imprimir(){
         cout<<"Nombre: "<<getNombre()<<endl;
         cout<<"Path: "<<getPath()<<endl;
-        cout<<"Id: "<<getPos()<<endl;
+        cout<<"Id: "<<getPos()<<endl<<endl;
+    }
+
+    void mostrasPos(){
+        cout<<"ID: "<<pos<<" Nombre: "<<nombre<<endl;
     }
 
 };

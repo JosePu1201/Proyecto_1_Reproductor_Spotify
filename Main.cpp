@@ -70,12 +70,16 @@ void opCancion(Canciones* lisCan){
             cin >> path;
             Cancion* nuevo = new Cancion(nombre,path);
             lisCan->agregarAlFinal(nuevo);
-            lisCan->imprimir();
             break;
             }
             
         case 2:{
-            //asdasd
+            std::cout << "Elige la cancion a eliminar por su ID" << std::endl;
+            lisCan->imprimirPos();
+            int id;
+            cout<<"ELige la cancion a eliminar"<<endl;
+            cin>>id;
+            lisCan->eliminar(id);
         }
             break;
         case 3:{
@@ -116,20 +120,31 @@ void rep(){
         {
         case 1:{
             char direccion [] = "/Documentos/Estructuras de datos/Proyecto_1/AC_DC-T.N.T..mp3";
-            //cout<<PlaySound((LPCSTR)direccion,NULL,SND_FILENAME | SND_ASYNC);
         }
             break;
-        case 2:{}
+        case 2:{
+
+        }
             break;
-        case 3:{}
+        case 3:{
+
+        }
             break;
-        case 4:{}
+        case 4:{
+
+        }
             break;
-        case 5:{}
+        case 5:{
+
+        }
             break;
-        case 6:{}
+        case 6:{
+
+        }
             break;
-        case 7:{}
+        case 7:{
+
+        }
             break;
         default:{    
             std::cout << "Opcion invalida" << std::endl;}

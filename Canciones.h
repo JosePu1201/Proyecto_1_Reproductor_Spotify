@@ -85,7 +85,19 @@ struct Canciones
             }
         }
     }
-
+    void busquedas(string buscando){
+        Cancion* aux = primero;
+        while (aux != NULL)
+        {
+            if(aux->getNombre() == buscando){
+                std::cout << "Cancion encontrada con exito" << std::endl;
+                aux->mostrasPos();
+                break;
+            }
+            aux = aux->getSiguiente();
+        }
+        
+    }
     int buscar(int pos){
         if(primero->getPos() == pos){
             return 0;
@@ -111,7 +123,7 @@ struct Canciones
 
     void imprimir(){
         Cancion* aux = primero;
-        cout<<"Lista de canciones"<<endl;
+        cout<<"-----Lista de canciones-----"<<endl;
         while (aux != NULL)
         {
             aux->imprimir();
@@ -119,5 +131,16 @@ struct Canciones
         }
         cout<<endl;
         
+    }
+    void imprimirPos(){
+        Cancion* aux = primero;
+        cout<<"-----Lista de canciones-----\n"<<endl;
+        while (aux != NULL)
+        {
+            aux->mostrasPos();
+            aux = aux->getSiguiente();
+        }
+        cout<<endl;
+
     }
 };
