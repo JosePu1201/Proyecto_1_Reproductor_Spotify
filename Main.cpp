@@ -1,5 +1,7 @@
-#include <istream>
-#include <stdlib.h>
+#include <cstdlib>
+#include <iostream>
+#include <string>
+#include <stdio.h>
 #include "Canciones.h"
 
 using namespace std;
@@ -48,32 +50,30 @@ void opCancion(Canciones* lisCan){
     int opCan = 0;
     while (opCan != 5)
     {
+
         std::cout << "+++++  Operaciones de canciones  +++++" << std::endl;
         std::cout << "1) Insertar" << std::endl; 
         std::cout << "2) Eliminar" << std::endl;
         std::cout << "3) Buscar nombre" << std::endl;       
         std::cout << "4) Listar canciones" << std::endl;
         std::cout << "5) Regresar al menu principal" << std::endl;
+
         cin>>opCan;
         switch (opCan)
         {
         case 1:{
-            char nombre [500];
-            char path [2000];
-            int num = 1;
+            string nombre;
+            string path;
             std::cout << "Ingresa el nombre de la nueva cancion: " << std::endl;
-            cin>> nombre;
+            cin >> nombre;
             std::cout << "Ingresa la ubicacion en el disco" << std::endl;
-            cin>> path;
-            Cancion* nuevo;
-            nuevo = new Cancion();
-            nuevo->setPos(num);
-            nuevo->setNombre(nombre);
-            nuevo->setPath(path);
-            nuevo->imprimir();
+            cin >> path;
+            Cancion* nuevo = new Cancion(nombre,path);
             lisCan->agregarAlFinal(nuevo);
-            }
+            lisCan->imprimir();
             break;
+            }
+            
         case 2:{
             //asdasd
         }
@@ -114,7 +114,10 @@ void rep(){
         cin>>opCan;
         switch (opCan)
         {
-        case 1:{}
+        case 1:{
+            char direccion [] = "/Documentos/Estructuras de datos/Proyecto_1/AC_DC-T.N.T..mp3";
+            //cout<<PlaySound((LPCSTR)direccion,NULL,SND_FILENAME | SND_ASYNC);
+        }
             break;
         case 2:{}
             break;

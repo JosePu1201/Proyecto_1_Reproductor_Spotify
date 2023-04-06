@@ -12,12 +12,16 @@ struct Canciones
 {
     Cancion* primero;
     Cancion* ultimo;
+    int pos = 0;
     
     Canciones(){
         primero = NULL;
         ultimo = NULL;
     }
-    void agregarAlFinal(Cancion* nuevo){ //agrega un nodo al final
+    void agregarAlFinal(Cancion* nuevo){
+        pos++;
+        nuevo->setPos(pos); //agrega un nodo al final
+        std::cout << "Esto es el objeto a agregar: " <<nuevo->getNombre()<< std::endl;
         if(primero == NULL && ultimo == NULL){
             primero = nuevo;
             ultimo = nuevo;
@@ -25,10 +29,10 @@ struct Canciones
 
         }else{
             cout<<"agrega los demas"<<endl;
-        ultimo->setSiguiente(nuevo);
-        ultimo->getSiguiente()->setAnterior(ultimo);
+            ultimo->setSiguiente(nuevo);
+            ultimo->getSiguiente()->setAnterior(ultimo);
 
-        ultimo = ultimo->getSiguiente();
+            ultimo = ultimo->getSiguiente();
         }
     }
 
@@ -108,9 +112,9 @@ struct Canciones
     void imprimir(){
         Cancion* aux = primero;
         cout<<"Lista de canciones"<<endl;
-        while (aux->getSiguiente() != NULL)
+        while (aux != NULL)
         {
-            cout<<aux->getNombre()<<"--->";
+            aux->imprimir();
             aux = aux->getSiguiente();
         }
         cout<<endl;

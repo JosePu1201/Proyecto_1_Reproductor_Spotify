@@ -2,67 +2,70 @@
 #define CANCION_H
 
 #endif // !CANCION_H
-#include<iostream>
 #include <cstdlib>
+#include <iostream>
+#include <string>
+#include <stdio.h>
 
 using namespace std;
 struct Cancion
 {
     Cancion* anterior;
     Cancion* siguiente;
-    char* path;
-    char* nombre;
+    string path;
+    string nombre;
+    string carajo;
     int pos;
 
-    Cancion(){
-       
+    Cancion(string nombre,string path){
+        this->nombre = nombre;
+        this->path = path;
     }
 
-    void setAnterior(Cancion* anterior){
-        this->anterior = anterior;
+    void setAnterior(Cancion* entrada){
+        this->anterior = entrada;
     }
 
     Cancion* getAnterior(){
         return this->anterior;
     }
 
-    void setSiguiente(Cancion* siguiente){
-        this->siguiente = siguiente;
+    void setSiguiente(Cancion* entrada){
+        this->siguiente = entrada;
     }
 
     Cancion* getSiguiente(){
         return this->siguiente;
     }
 
-    void setPath(char* path){
-        this->path = path;
+    void setPath(string entrada){
+        this->path = entrada;
     }
 
-    char* getPath(){
+    string getPath(){
         return this->path;
     }
 
-    void setNombre(char* nombre){
-        this->nombre = nombre;
+    void setNombre(string entrada){
+        this->nombre = entrada;
         
     }
 
-    char* getNombre(){
+    string getNombre(){
         return this->nombre;
     }
 
-    void setPos(int pos){
-        this->pos = pos;
+    void setPos(int entrada){
+        this->pos = entrada;
     }
 
     int getPos(){
         return this->pos;
     }
-    char* impresion(){
-        return path;
-    }
     void imprimir(){
-        cout<<"Nombre: "<<nombre<<endl;
+        cout<<"Nombre: "<<getNombre()<<endl;
+        cout<<"Path: "<<getPath()<<endl;
+        cout<<"Id: "<<getPos()<<endl;
     }
 
 };
