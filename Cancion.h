@@ -2,7 +2,10 @@
 #define CANCION_H
 
 #endif // !CANCION_H
+#include<iostream>
+#include <cstdlib>
 
+using namespace std;
 struct Cancion
 {
     Cancion* anterior;
@@ -41,6 +44,7 @@ struct Cancion
 
     void setNombre(char* nombre){
         this->nombre = nombre;
+        
     }
 
     char* getNombre(){
@@ -57,4 +61,8 @@ struct Cancion
     char* impresion(){
         return path;
     }
+    void imprimir(){
+        cout<<"Nombre: "<<nombre<<endl;
+    }
+
 };

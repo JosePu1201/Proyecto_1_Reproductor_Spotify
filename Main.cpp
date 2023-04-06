@@ -1,4 +1,4 @@
-#include <iostream>
+#include <istream>
 #include <stdlib.h>
 #include "Canciones.h"
 
@@ -37,13 +37,14 @@ void opPlayList(){
             break;
         default:{ 
             std::cout << "Opcion invalida" << std::endl;
-        }
             break;
+        }
+            
         }
     }
 }
 /*Menu de canciones*/
-void opCancion(){
+void opCancion(Canciones* lisCan){
     int opCan = 0;
     while (opCan != 5)
     {
@@ -57,15 +58,20 @@ void opCancion(){
         switch (opCan)
         {
         case 1:{
-            string nombre;
-            string path;
+            char nombre [500];
+            char path [2000];
+            int num = 1;
             std::cout << "Ingresa el nombre de la nueva cancion: " << std::endl;
             cin>> nombre;
             std::cout << "Ingresa la ubicacion en el disco" << std::endl;
             cin>> path;
             Cancion* nuevo;
             nuevo = new Cancion();
-            std::cout << "carajo esta bien hasta aca" << std::endl;
+            nuevo->setPos(num);
+            nuevo->setNombre(nombre);
+            nuevo->setPath(path);
+            nuevo->imprimir();
+            lisCan->agregarAlFinal(nuevo);
             }
             break;
         case 2:{
@@ -77,7 +83,7 @@ void opCancion(){
         }
             break;
         case 4:{
-
+                lisCan->imprimir();
         }
             break;
         case 5:{
@@ -132,6 +138,7 @@ void rep(){
 
 int main()
 {
+    Canciones* listaCan = new Canciones();
     int opMenu = 0;
     while(opMenu != 5)
     {
@@ -145,7 +152,7 @@ int main()
         switch (opMenu)
         {
         case 1:{
-            opCancion();
+            opCancion(listaCan);
         }
             break;
         case 2:{

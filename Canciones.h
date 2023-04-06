@@ -18,11 +18,18 @@ struct Canciones
         ultimo = NULL;
     }
     void agregarAlFinal(Cancion* nuevo){ //agrega un nodo al final
-        if(primero == NULL && ultimo == NULL){}
+        if(primero == NULL && ultimo == NULL){
+            primero = nuevo;
+            ultimo = nuevo;
+            cout<<"agrega el primero"<<endl;
+
+        }else{
+            cout<<"agrega los demas"<<endl;
         ultimo->setSiguiente(nuevo);
         ultimo->getSiguiente()->setAnterior(ultimo);
 
         ultimo = ultimo->getSiguiente();
+        }
     }
 
     void eliminar(int id){
@@ -96,5 +103,17 @@ struct Canciones
             }
         }
 
+    }
+
+    void imprimir(){
+        Cancion* aux = primero;
+        cout<<"Lista de canciones"<<endl;
+        while (aux->getSiguiente() != NULL)
+        {
+            cout<<aux->getNombre()<<"--->";
+            aux = aux->getSiguiente();
+        }
+        cout<<endl;
+        
     }
 };
