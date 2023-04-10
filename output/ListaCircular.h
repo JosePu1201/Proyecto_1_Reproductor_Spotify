@@ -108,5 +108,4 @@ struct ListaCircular
     void eliminar(char* eliminar){
         eliminarEnLista(inicio,eliminar);
     }
-
 };

@@ -2,14 +2,16 @@
 #include <iostream>
 #include <string>
 #include <stdio.h>
-#include "Canciones.h"
+#include "ListaListas.h"
+
 
 using namespace std;
 
 /*menu de operacion de cancionses */
 
-void opPlayList(){
+void opPlayList(ListaListas* listas,PlayListNormal* lisCan){
     int opCan = 0;
+    
     while (opCan != 7)
     {
         std::cout << "+++++  Operaciones de PlayList  +++++" << std::endl;
@@ -23,15 +25,142 @@ void opPlayList(){
         cin>>opCan;
         switch (opCan)
         {
-        case 1:{}
+        case 1:{
+            int op;
+            NodoListas* nuevo = new NodoListas();
+            string nombre;
+            string des;
+            cout<<"Ingresa el nombre de la Play List"<<endl;
+            cin>>nombre;
+            cout<<"Ingresa la descripcion de la Play List"<<endl;
+            cin>>des;
+            nuevo->setNombre(nombre);
+            nuevo->setDes(des);
+            std::cout << "Quieres agregar canciones\n1) Si\n2) No" << std::endl;
+            cin>>op;
+            if(op == 1){
+                int opW = 0;
+                int opId;
+                while (opW != 2)
+                {
+
+                    std::cout << "Elige el id de la cancion a agregar\n" << std::endl;
+                    lisCan->imprimirPos();
+                    std::cout << "" << std::endl;
+                    cin>>opId;
+                    Cancion* aux = lisCan->getPrimero();
+                    bool bandera = false;
+                    while (aux != NULL)
+                    {
+                        if(aux->getPos() == opId){
+                            nuevo->getLista()->agregarAlFinal(aux);
+                            bandera = true;
+                        }
+                        aux = aux->getSiguiente();
+                    }
+
+                    if(bandera){
+                        std::cout << "Cancion agregada con exito" << std::endl;
+                    }
+                    else{
+                        std::cout << "Cancion no encontrada" << std::endl;
+                    }
+
+                    std::cout << "Agregar una nueva cancion\n1) Si\n2) No" << std::endl;
+                    cin>>opW;
+
+                    
+                }
+                
+            }else{
+                listas->agregarAlFinal(nuevo);
+                std::cout << "Lista de reproduccion creada" << std::endl;
+            }
+            
+        }
             break;
-        case 2:{}
+        case 2:{
+            int idE;
+            std::cout << "Elige el Id de la lista que deceas eliminar" << std::endl;
+            listas->imprimirListas();
+            cin>>idE;
+            bool bandera = false;
+            NodoListas* aux = listas->getPrimero();
+            while (aux != NULL)
+            {
+                if(aux->getId() == idE){
+                    int ent;
+                    std::cout << "Desea eliminal la Play list de nombre: " <<aux->getNombre()<<"\n1) Si \n2)No"<< std::endl;
+                    cin>>ent;
+                    if(ent == 1){
+                        bandera = true;
+                    }
+                }
+                aux = aux->getSiguiente();
+            }
+            if(bandera){
+                listas->eliminar(idE);
+                std::cout << "Lista eliminada con extio" << std::endl;
+            }else{
+                std::cout << "No se pudo eliminar la lista" << std::endl;
+            }
+        }
             break;
-        case 3:{}
+        case 3:{
+
+            
+        }
             break;
-        case 4:{}
+        case 4:{
+                listas->imprimirListas();
+        }
             break;
-        case 5:{}
+        case 5:{
+            int op;
+            std::cout << "Elige el ID de la lista a la que le quieres agregar canciones\n" << std::endl;
+            listas->imprimirListas();
+            cin>>op;
+            NodoListas* aux = listas->getPrimero();
+            while (aux != NULL)
+            {
+                if(aux->getId() == op){
+                    int opW = 0;
+                    int opId;
+                    while (opW != 2)
+                    {
+                        std::cout << "Elige el id de la cancion a agregar\n" << std::endl;
+                        lisCan->imprimirPos();
+                        std::cout << "" << std::endl;
+                        cin>>opId;
+                        Cancion* aux1 = lisCan->getPrimero();
+                        bool bandera = false;
+                        while (aux1 != NULL)
+                        {
+                            if(aux1->getPos() == opId){
+                                
+                                aux->getLista()->agregarAlFinal(aux1);
+                                bandera = true;
+                            }
+                            aux1 = aux1->getSiguiente();
+                    }
+
+                    if(bandera){
+                        std::cout << "Cancion agregada con exito" << std::endl;
+                    }
+                    else{
+                        std::cout << "Cancion no encontrada" << std::endl;
+                    }
+
+                    std::cout << "Agregar una nueva cancion\n1) Si\n2) No" << std::endl;
+                    cin>>opW;
+
+                    
+                }
+                break;
+                }
+                aux = aux->getSiguiente();
+            }
+        }
             break;
         case 6:{}
             break;
@@ -46,7 +175,7 @@ void opPlayList(){
     }
 }
 /*Menu de canciones*/
-void opCancion(Canciones* lisCan){
+void opCancion(PlayListNormal* lisCan){
     int opCan = 0;
     while (opCan != 5)
     {
@@ -83,7 +212,9 @@ void opCancion(Canciones* lisCan){
         }
             break;
         case 3:{
-
+            string entrada;
+            std::cout << "Buscar cancion \nIngresa el nombre de la canion que deceas encontrar:" << std::endl;
+            cin>>entrada;
         }
             break;
         case 4:{
@@ -91,6 +222,7 @@ void opCancion(Canciones* lisCan){
         }
             break;
         case 5:{
+
 
         }
             break;
@@ -156,7 +288,9 @@ void rep(){
 
 int main()
 {
-    Canciones* listaCan = new Canciones();
+    PlayListNormal* listaCan = new PlayListNormal();
+    ListaListas* listas = new ListaListas();
+    //ListaListas* listas = new ListaListas();
     int opMenu = 0;
     while(opMenu != 5)
     {
@@ -174,14 +308,16 @@ int main()
         }
             break;
         case 2:{
-            opPlayList();
+            opPlayList(listas,listaCan);
         }
             break;
         case 3:{
             rep();
         }
             break;
-        case 4:{}
+        case 4:{
+            
+        }
             break;
         case 5:{}
             break;
