@@ -71,7 +71,7 @@ void opPlayList(ListaListas* listas,PlayListNormal* lisCan){
 
                     
                 }
-                
+                listas->agregarAlFinal(nuevo);
             }else{
                 listas->agregarAlFinal(nuevo);
                 std::cout << "Lista de reproduccion creada" << std::endl;
@@ -84,35 +84,19 @@ void opPlayList(ListaListas* listas,PlayListNormal* lisCan){
             std::cout << "Elige el Id de la lista que deceas eliminar" << std::endl;
             listas->imprimirListas();
             cin>>idE;
-            bool bandera = false;
-            NodoListas* aux = listas->getPrimero();
-            while (aux != NULL)
-            {
-                if(aux->getId() == idE){
-                    int ent;
-                    std::cout << "Desea eliminal la Play list de nombre: " <<aux->getNombre()<<"\n1) Si \n2)No"<< std::endl;
-                    cin>>ent;
-                    if(ent == 1){
-                        bandera = true;
-                    }
-                }
-                aux = aux->getSiguiente();
-            }
-            if(bandera){
-                listas->eliminar(idE);
-                std::cout << "Lista eliminada con extio" << std::endl;
-            }else{
-                std::cout << "No se pudo eliminar la lista" << std::endl;
-            }
+            listas->eliminarLista(idE);
         }
             break;
         case 3:{
-
-            
+            int op;
+            std::cout << "Selecciona el ID de la PlayList que deceas modificar" << std::endl;
+            listas->imprimirListas();
+            cin>>op;
+            listas->modificar(op);
         }
             break;
         case 4:{
-                listas->imprimirListas();
+                listas->mostrarListas();
         }
             break;
         case 5:{
@@ -120,49 +104,16 @@ void opPlayList(ListaListas* listas,PlayListNormal* lisCan){
             std::cout << "Elige el ID de la lista a la que le quieres agregar canciones\n" << std::endl;
             listas->imprimirListas();
             cin>>op;
-            NodoListas* aux = listas->getPrimero();
-            while (aux != NULL)
-            {
-                if(aux->getId() == op){
-                    int opW = 0;
-                    int opId;
-                    while (opW != 2)
-                    {
-                        std::cout << "Elige el id de la cancion a agregar\n" << std::endl;
-                        lisCan->imprimirPos();
-                        std::cout << "" << std::endl;
-                        cin>>opId;
-                        Cancion* aux1 = lisCan->getPrimero();
-                        bool bandera = false;
-                        while (aux1 != NULL)
-                        {
-                            if(aux1->getPos() == opId){
-                                
-                                aux->getLista()->agregarAlFinal(aux1);
-                                bandera = true;
-                            }
-                            aux1 = aux1->getSiguiente();
-                    }
-
-                    if(bandera){
-                        std::cout << "Cancion agregada con exito" << std::endl;
-                    }
-                    else{
-                        std::cout << "Cancion no encontrada" << std::endl;
-                    }
-
-                    std::cout << "Agregar una nueva cancion\n1) Si\n2) No" << std::endl;
-                    cin>>opW;
-
-                    
-                }
-                break;
-                }
-                aux = aux->getSiguiente();
-            }
+           listas->agregarCanciones(op,lisCan);
         }
             break;
-        case 6:{}
+        case 6:{
+            int ops;
+            std::cout << "Elige el ID de la PlayList para eliminar canciones\n" << std::endl;
+            listas->imprimirListas();
+            cin>>ops;
+            listas->eliminarCancionLista(ops);
+        }
             break;
         case 7:{}
             break;

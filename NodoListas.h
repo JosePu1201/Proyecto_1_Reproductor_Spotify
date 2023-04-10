@@ -70,4 +70,7 @@ struct NodoListas
     PlayListNormal* getLista(){
         return this->lista;
     }
+    void imprimirInfoNodo(){
+        std::cout << "ID: " <<id<<"\tNombre: "<<nombre<<"\tDescricpion: "<<des<< std::endl;
+    }
 };

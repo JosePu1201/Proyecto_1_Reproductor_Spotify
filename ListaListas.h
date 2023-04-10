@@ -126,4 +126,154 @@ struct ListaListas
         return this->primero;
     }
 
+    void eliminarLista(int idE){
+            bool bandera = false;
+            NodoListas* aux = primero;
+            while (aux != NULL)
+            {
+                if(aux->getId() == idE){
+                    int ent;
+                    std::cout << "Desea eliminal la Play list de nombre: " <<aux->getNombre()<<"\n1) Si \n2)No"<< std::endl;
+                    cin>>ent;
+                    if(ent == 1){
+                        bandera = true;
+                    }
+                }
+                aux = aux->getSiguiente();
+            }
+            if(bandera){
+                eliminar(idE);
+                std::cout << "Lista eliminada con extio" << std::endl;
+            }else{
+                std::cout << "No se pudo eliminar la lista" << std::endl;
+            }
+    }
+    void modificar(int op){
+        NodoListas* aux = primero;
+        while (aux != NULL)
+        {
+            if(aux->getId() == op){
+                aux->imprimirInfoNodo();
+                cout<<endl;
+                string nombre = "";
+                string descrip = "";
+                std::cout << "Ingresa el nuevo nombre de la lista" << std::endl;
+                cin>>nombre;
+                std::cout << "Ingresa la nueva descripcion de la lista" << std::endl;
+                cin>>descrip;
+                if(nombre.length() == 0 ){
+                    std::cout << "El nombre esta vacio, cambios no guradados" << std::endl;
+                }else{
+                    aux->setNombre(nombre);
+                }
+                if(descrip.length() == 0){
+                    std::cout << "El nombre esta vacio, cambios no guradados" << std::endl;
+                }else{
+                    aux->setDes(descrip);
+                }
+                aux->imprimirInfoNodo();
+            }
+            aux = aux->getSiguiente();
+        }
+        
+
+    }
+    void agregarCanciones(int op,PlayListNormal* lisCan){
+         NodoListas* aux = primero;
+            while (aux != NULL)
+            {
+                if(aux->getId() == op){
+                    int opW = 0;
+                    int opId;
+                    while (opW != 2)
+                    {
+                        std::cout << "Elige el id de la cancion a agregar\n" << std::endl;
+                        lisCan->imprimirPos();
+                        std::cout << "" << std::endl;
+                        cin>>opId;
+                        Cancion* aux1 = lisCan->getPrimero();
+                        bool bandera = false;
+                        while (aux1 != NULL)
+                        {
+                            if(aux1->getPos() == opId){
+                                
+                                aux->getLista()->agregarAlFinal(aux1);
+                                bandera = true;
+                            }
+                            aux1 = aux1->getSiguiente();
+                    }
+                    if(bandera){
+                        std::cout << "Cancion agregada con exito" << std::endl;
+                    }
+                    else{
+                        std::cout << "Cancion no encontrada" << std::endl;
+                    }
+
+                    std::cout << "Agregar una nueva cancion\n1) Si\n2) No" << std::endl;
+                    cin>>opW;
+
+                    
+                }
+                break;
+                }
+                aux = aux->getSiguiente();
+            }
+    }
+
+    void eliminarCancionLista(int op){
+        NodoListas* aux = primero;
+        while (aux != NULL)
+        {
+            if(aux->getId() == op){
+                bool bandera = true;
+                while (bandera)
+                {
+                    int opM;
+                    std::cout << "Elige el ID de la cancion que deseas eliminar" << std::endl;
+                    aux->getLista()->imprimirPos();
+                    cin>>opM;
+                    aux->getLista()->eliminar(opM);
+                    std::cout << "Deceas eliminar otra cancion\n1) Si\2)No\n" << std::endl;
+                    cin>>opM;
+                    if(opM == 2){
+                        bandera = true;
+                    }
+                }
+                
+
+            }
+            aux = aux->getSiguiente();
+        }
+        
+    }
+
+    void mostrarListas(){
+        int op;
+        std::cout << "Elige la opcion\n1) Mostrar Listas \n2) Mostrar canciones de una lista" << std::endl;
+        cin>>op;
+
+        if(op ==1){
+            imprimirListas();
+        }else if(op == 2){
+            int opCan;
+            std::cout << "Elige el ID de la lista para mostrar las canciones" << std::endl;
+            imprimirListas();
+            cin>>opCan;
+            NodoListas* aux = primero;
+            while (aux != NULL)
+            {
+                if(aux->getId() == opCan){
+                    aux->getLista()->imprimirPos();
+                    break;
+                }
+                aux = aux->getSiguiente();
+            }
+            
+        }
+        else{   
+            std::cout << "Opcion no valida" << std::endl;
+        }
+    
+    }
+
 };
