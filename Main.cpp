@@ -4,13 +4,22 @@
 #include <string>
 #include <stdio.h>
 #include "ListaListas.h"
+
 #include "cstdlib"
-#include "pugiconfig.hpp"
-#include "pugixml.hpp"
+//#include "pugixml.hpp"
 
 using namespace std;
 
-/*menu de operacion de cancionses */
+/*entrada de XML
+void xml(){
+    pugi::xml_document doc;
+    if (!doc.load_file("mapa.tmx"))
+    {
+        std::cerr << "Error al cargar el documento XML." << std::endl;
+        
+    }
+}
+menu de operacion de cancionses */
 
 void opPlayList(ListaListas* listas,PlayListNormal* lisCan){
     
@@ -48,9 +57,9 @@ void opPlayList(ListaListas* listas,PlayListNormal* lisCan){
             if(op == 1){
                 int opW = 0;
                 int opId;
+                PlayListNormal* auxPlay = new PlayListNormal();
                 while (opW != 2)
                 {
-
                     std::cout << "Elige el id de la cancion a agregar\n" << std::endl;
                     lisCan->imprimirPos();
                     std::cout << "" << std::endl;
@@ -59,20 +68,19 @@ void opPlayList(ListaListas* listas,PlayListNormal* lisCan){
                     bool bandera = false;
                     while (aux != NULL)
                     {
-                        
                         if(aux->getPos() == opId){
                             aux->imprimir();
                             std::cout << "Canciones de la lista: " <<opId<< std::endl;
-                            nuevo->getLista()->imprimirPos();
-                            Cancion* otro = aux;
-                            nuevo->getLista()->agregarAlFinal(otro);
+                            auxPlay->imprimirPos();
+                            Cancion* otro = new Cancion(aux->getNombre(),aux->getPath());
+                            otro->imprimir();
+                            auxPlay->agregarAlFinal(otro);
                             std::cout << "Canciones de la lista: " <<opId<< std::endl;
-                            nuevo->getLista()->imprimirPos();
+                            auxPlay->imprimirPos();
                             bandera = true;
                         }
                         aux = aux->getSiguiente();
                     }
-
                     if(bandera){
                         std::cout << "Cancion agregada con exito" << std::endl;
                     }
@@ -85,7 +93,8 @@ void opPlayList(ListaListas* listas,PlayListNormal* lisCan){
 
                     
                 }
-                
+                nuevo->setLista(auxPlay);
+                nuevo->getLista()->imprimirPos();
                 listas->agregarAlFinal(nuevo);
             }else{
                 listas->agregarAlFinal(nuevo);
@@ -171,18 +180,55 @@ void opCancion(PlayListNormal* lisCan){
             }
             
         case 2:{
-            std::cout << "Elige la cancion a eliminar por su ID" << std::endl;
-            lisCan->imprimirPos();
-            int id;
-            cout<<"ELige la cancion a eliminar"<<endl;
-            cin>>id;
-            lisCan->eliminar(id);
+            int op;
+            std::cout << "1) Eliminar por ID \n2) Eliminar por nombre \n3) regresar" << std::endl;
+            cin>>op;
+            if(op == 1){
+                int eliminar;
+                std::cout << "Elige la cancion a eliminar por su ID" << std::endl;
+                lisCan->imprimirPos();
+                int id;
+                cout<<"ELige la cancion a eliminar"<<endl;
+                cin>>id;
+                std::cout << "Eliminar cancion\n1) Aceptar\n2) Cancelar" << std::endl;
+                cin>>eliminar;
+                if(eliminar == 1){
+                    lisCan->eliminar(id);
+                    std::cout << "Eliminado con exito" << std::endl;
+                }
+                if(eliminar == 2){
+                    std::cout << "No se elimino la cancion" << std::endl;
+                }
+                
+            }
+            if(op == 2){
+                int eliminar;
+                string nom;
+                std::cout << "Elige la cancion a eliminar por su nombre" << std::endl;
+                lisCan->imprimirPos();
+                std::cout << "Elige la cancion a eliminar" << std::endl;
+                cin.ignore();
+                getline(cin,nom);
+                std::cout << "Eliminar cancion\n1) Aceptar\n2) Cancelar" << std::endl;
+                cin>>eliminar;
+                if(eliminar == 1){
+                    lisCan->eliminarNombre(nom);
+                    std::cout << "Eliminado con exito" << std::endl;
+                }
+                if(eliminar == 2){
+                    std::cout << "No se elimino la cancion" << std::endl;
+                }
+            }
+            if(op == 3){}
+
         }
             break;
         case 3:{
             string entrada;
             std::cout << "Buscar cancion \nIngresa el nombre de la canion que deceas encontrar:" << std::endl;
-            cin>>entrada;
+            cin.ignore();
+            getline(cin,entrada);
+            lisCan->buscarNombre(entrada);
         }
             break;
         case 4:{
@@ -202,6 +248,15 @@ void opCancion(PlayListNormal* lisCan){
     
 
 }
+/*reproduccion de canciones*/
+void repr(ListaCircular* repetir, PlayListNormal* normal,Cancion* actual,int op){
+    if(op == 1){
+
+    }
+    if(op == 2){
+
+    }
+}
 /*Menu de reproduccion*/
 void rep(){
     int opCan = 0;
@@ -219,7 +274,7 @@ void rep(){
         switch (opCan)
         {
         case 1:{
-            char direccion [] = "/Documentos/Estructuras de datos/Proyecto_1/AC_DC-T.N.T..mp3";
+            
         }
             break;
         case 2:{
@@ -289,7 +344,7 @@ int main(int argc, char *argv[])
         }
             break;
         case 4:{
-            
+            //xml();
         }
             break;
         case 5:{}

@@ -16,12 +16,19 @@ struct Cancion
     string nombre;
     string carajo;
     int pos;
+    int posPlay;
 
     Cancion(string nombre,string path){
         this->nombre = nombre;
         this->path = path;
     }
+    void setPosPlay(int end){
+        this->posPlay = end;
+    }
 
+    int getPosPlay(){
+        return this->posPlay;
+    }
     void setAnterior(Cancion* entrada){
         this->anterior = entrada;
     }

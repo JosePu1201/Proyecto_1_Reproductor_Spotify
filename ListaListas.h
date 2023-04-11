@@ -198,8 +198,8 @@ struct ListaListas
                         {
                            
                             if(aux1->getPos() == opId){
-                                
-                                aux->getLista()->agregarAlFinal(aux1);
+                                Cancion* nuevo = new Cancion(aux1->getNombre(),aux1->getPath());
+                                aux->getLista()->agregarAlFinal(nuevo);
                                 bandera = true;
                             }
                             aux1 = aux1->getSiguiente();

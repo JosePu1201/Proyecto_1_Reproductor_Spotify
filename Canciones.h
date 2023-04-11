@@ -35,7 +35,22 @@ struct Canciones
             ultimo = ultimo->getSiguiente();
         }
     }
+    void agregarAlFinalLista(Cancion* nuevo){
+         //agrega un nodo al final
+        std::cout << "Esto es el objeto a agregar: " <<nuevo->getNombre()<< std::endl;
+        if(primero == NULL && ultimo == NULL){
+            primero = nuevo;
+            ultimo = nuevo;
+            cout<<"agrega el primero"<<endl;
 
+        }else{
+            cout<<"agrega los demas"<<endl;
+            ultimo->setSiguiente(nuevo);
+            ultimo->getSiguiente()->setAnterior(ultimo);
+
+            ultimo = ultimo->getSiguiente();
+        }
+    }
     void eliminar(int id){
         eliminarPlayList(primero,id);
     }
