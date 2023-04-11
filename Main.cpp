@@ -1,17 +1,21 @@
 #include <cstdlib>
 #include <iostream>
+#include <istream>
 #include <string>
 #include <stdio.h>
 #include "ListaListas.h"
-
+#include "cstdlib"
+#include "pugiconfig.hpp"
+#include "pugixml.hpp"
 
 using namespace std;
 
 /*menu de operacion de cancionses */
 
 void opPlayList(ListaListas* listas,PlayListNormal* lisCan){
-    int opCan = 0;
     
+    int opCan = 0;
+    system("cls");
     while (opCan != 7)
     {
         std::cout << "+++++  Operaciones de PlayList  +++++" << std::endl;
@@ -31,9 +35,12 @@ void opPlayList(ListaListas* listas,PlayListNormal* lisCan){
             string nombre;
             string des;
             cout<<"Ingresa el nombre de la Play List"<<endl;
-            cin>>nombre;
+            cin.ignore();
+            getline(cin,nombre);
+            //cin>>nombre;
             cout<<"Ingresa la descripcion de la Play List"<<endl;
-            cin>>des;
+            getline(cin,des);
+            //cin>>des;
             nuevo->setNombre(nombre);
             nuevo->setDes(des);
             std::cout << "Quieres agregar canciones\n1) Si\n2) No" << std::endl;
@@ -52,8 +59,15 @@ void opPlayList(ListaListas* listas,PlayListNormal* lisCan){
                     bool bandera = false;
                     while (aux != NULL)
                     {
+                        
                         if(aux->getPos() == opId){
-                            nuevo->getLista()->agregarAlFinal(aux);
+                            aux->imprimir();
+                            std::cout << "Canciones de la lista: " <<opId<< std::endl;
+                            nuevo->getLista()->imprimirPos();
+                            Cancion* otro = aux;
+                            nuevo->getLista()->agregarAlFinal(otro);
+                            std::cout << "Canciones de la lista: " <<opId<< std::endl;
+                            nuevo->getLista()->imprimirPos();
                             bandera = true;
                         }
                         aux = aux->getSiguiente();
@@ -71,6 +85,7 @@ void opPlayList(ListaListas* listas,PlayListNormal* lisCan){
 
                     
                 }
+                
                 listas->agregarAlFinal(nuevo);
             }else{
                 listas->agregarAlFinal(nuevo);
@@ -119,6 +134,7 @@ void opPlayList(ListaListas* listas,PlayListNormal* lisCan){
             break;
         default:{ 
             std::cout << "Opcion invalida" << std::endl;
+            opCan = 7;
             break;
         }
             
@@ -145,9 +161,10 @@ void opCancion(PlayListNormal* lisCan){
             string nombre;
             string path;
             std::cout << "Ingresa el nombre de la nueva cancion: " << std::endl;
-            cin >> nombre;
+            cin.ignore();
+            getline(cin,nombre);
             std::cout << "Ingresa la ubicacion en el disco" << std::endl;
-            cin >> path;
+            getline(cin,path);
             Cancion* nuevo = new Cancion(nombre,path);
             lisCan->agregarAlFinal(nuevo);
             break;
@@ -236,13 +253,18 @@ void rep(){
     }
 }
 
+void leerString(string entrada){
+    cin.ignore();
+    getline(cin, entrada);
+}
 
-int main()
+int main(int argc, char *argv[])
 {
     PlayListNormal* listaCan = new PlayListNormal();
     ListaListas* listas = new ListaListas();
     //ListaListas* listas = new ListaListas();
     int opMenu = 0;
+
     while(opMenu != 5)
     {
         std::cout << "+++++  Terminal Spotify  +++++" << std::endl;

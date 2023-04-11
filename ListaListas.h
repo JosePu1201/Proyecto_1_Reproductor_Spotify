@@ -158,9 +158,10 @@ struct ListaListas
                 string nombre = "";
                 string descrip = "";
                 std::cout << "Ingresa el nuevo nombre de la lista" << std::endl;
-                cin>>nombre;
+                cin.ignore();
+                getline(cin,nombre);
                 std::cout << "Ingresa la nueva descripcion de la lista" << std::endl;
-                cin>>descrip;
+                getline(cin,descrip);
                 if(nombre.length() == 0 ){
                     std::cout << "El nombre esta vacio, cambios no guradados" << std::endl;
                 }else{
@@ -195,6 +196,7 @@ struct ListaListas
                         bool bandera = false;
                         while (aux1 != NULL)
                         {
+                           
                             if(aux1->getPos() == opId){
                                 
                                 aux->getLista()->agregarAlFinal(aux1);
@@ -214,7 +216,7 @@ struct ListaListas
 
                     
                 }
-                break;
+                
                 }
                 aux = aux->getSiguiente();
             }
@@ -233,10 +235,11 @@ struct ListaListas
                     aux->getLista()->imprimirPos();
                     cin>>opM;
                     aux->getLista()->eliminar(opM);
-                    std::cout << "Deceas eliminar otra cancion\n1) Si\2)No\n" << std::endl;
-                    cin>>opM;
-                    if(opM == 2){
-                        bandera = true;
+                    std::cout << "Deceas eliminar otra cancion\n1) Si\n2)No\n" << std::endl;
+                    int opm1;
+                    cin>>opm1;
+                    if(opm1 == 2){
+                        bandera = false;
                     }
                 }
                 
