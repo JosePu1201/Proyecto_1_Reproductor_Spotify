@@ -73,7 +73,7 @@ struct Cancion
         if(pos > 0){
         cout<<"Nombre: "<<getNombre();
         cout<<"\tPath: "<<getPath();
-        cout<<"\tId: "<<getPos()<<endl<<endl;
+        cout<<"\tId: "<<getPos()<<endl;
         }
 
     }

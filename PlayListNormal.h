@@ -190,7 +190,7 @@ void agregarAlFinal(Cancion* nuevo){ //agrega una cancion al final de la lista c
     void imprimir(){ // imrime todas las canciones O(n)
         Cancion* aux = primero;
         cout<<"-----Lista de canciones-----"<<endl;
-        while (aux != NULL)
+        while (aux != NULL && aux != nullptr)
         {
             aux->imprimir();
             aux = aux->getSiguiente();
@@ -201,7 +201,7 @@ void agregarAlFinal(Cancion* nuevo){ //agrega una cancion al final de la lista c
     void imprimirPos(){
         Cancion* aux = primero;
         cout<<"-----Lista de canciones-----\n"<<endl;
-        while (aux != NULL)
+        while (aux != NULL && aux != nullptr)
         {
             aux->mostrasPos();
             aux = aux->getSiguiente();

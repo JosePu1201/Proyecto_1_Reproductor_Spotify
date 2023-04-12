@@ -16,7 +16,9 @@ struct ListaCircular
         this->inicio->setSiguiente(nuevo); 
         this->inicio->setAnterior(nuevo);
     }
-
+    Cancion* getInicio(){
+        return this->inicio;
+    }
     void agregarInicio(Cancion* nuevo){
         nuevo->setAnterior(inicio->getAnterior());
         nuevo->setSiguiente(inicio);
