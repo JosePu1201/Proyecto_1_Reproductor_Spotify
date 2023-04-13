@@ -15,8 +15,8 @@ struct Cancion
     string path;
     string nombre;
     string carajo;
-    int pos;
-    int posPlay;
+    int pos = 0;
+    int posPlay = 0;
 
     Cancion(string nombre,string path){
         this->nombre = nombre;

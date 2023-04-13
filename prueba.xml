@@ -1,28 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Insertar>
-	<cancion>
-		<Nombre>Yellow</Nombre>
-		<path>Songs/Coldplay - Yellow (Letra Lyrics EnglishSpanish - EspañolInglés).mp3</path>
-	</cancion>
-	<cancion>
-		<Nombre>Me Canse EL clubo</Nombre>
-		<path>Songs/El CLubo (Me canse).mp3</path>
-	</cancion>
-	<cancion>
-		<Nombre>Mi historia entre tus dedos</Nombre>
-		<path>Songs/Gianluca Grignani  Mi Historia Entre Tus Dedos [Letra].mp3</path>
-		<Pos>3</Pos>
-	</cancion>
-	<cancion>
-		<Nombre>Mentirosa Elefante</Nombre>
-		<path>Songs/Mentirosa - Elefante  Letra.mp3</path>
-	</cancion>
-	<cancion>
-		<Nombre>Me canse de amarte</Nombre>
-		<path>Songs/Me canse de amarte- los rancheros.mp3</path>
-	</cancion>
-	<cancion>
-		<Nombre>Perdicion</Nombre>
-		<path>Songs/Viento en Contra - Perdicion.mp3</path>
-	</cancion>
-</Insertar>
+<Eliminar>
+    <cancion>
+        <id>2</id>
+    </cancion>
+    <cancion>
+        <Nombre>Carga 2</Nombre>
+    </cancion>
+</Eliminar>

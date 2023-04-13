@@ -13,13 +13,16 @@ struct PlayListNormal
     Cancion* primero;
     Cancion* ultimo;
     int pos = 0;
-    int posPLay = 0;
+    int size = 0;
 
     PlayListNormal(){
         primero = NULL;
         ultimo = NULL;
     }
 
+    int getSize(){
+        return size;
+    }
 void buscarNombre(string nombre){ //usca por nombre complejidad = O(n)
     Cancion* aux = primero;
     bool bandera = false;
@@ -38,6 +41,7 @@ void buscarNombre(string nombre){ //usca por nombre complejidad = O(n)
 }
 void agregarAlFinal(Cancion* nuevo){ //agrega una cancion al final de la lista complejidad = 1
         pos++;
+        size++;
         nuevo->setPos(pos);
         if(primero == NULL && ultimo == NULL){
             primero = nuevo;
@@ -52,8 +56,8 @@ void agregarAlFinal(Cancion* nuevo){ //agrega una cancion al final de la lista c
         }
     }
     void agregarAlFinalLista(Cancion* nuevo){ //agrega una cancion al final de la lista complejidad = 1
-        posPLay++;
         //nuevo.set
+        size++;
         if(primero == NULL && ultimo == NULL){
             primero = nuevo;
             ultimo = nuevo;
@@ -80,12 +84,14 @@ void agregarAlFinal(Cancion* nuevo){ //agrega una cancion al final de la lista c
                 actual->setSiguiente(NULL);
                 actual->setPos(-1);
                 eliminarCan(siguiente, id);
+                size--;
             }
             else{
                 actual->getAnterior()->setSiguiente(NULL);
                 actual->setAnterior(NULL);
                 actual->setSiguiente(NULL);
                 actual->setPos(-1);
+                size--;
             }
         }
         else if(actual->getNombre() == id && actual == primero){
@@ -95,11 +101,13 @@ void agregarAlFinal(Cancion* nuevo){ //agrega una cancion al final de la lista c
                 actual->setSiguiente(NULL);
                 actual->setPos(-1);
                 eliminarCan(primero,id);
+                size--;
             }
             else{
                 actual->setAnterior(NULL);
                 actual->setSiguiente(NULL);
                 actual->setPos(-1);
+                size--;
             }
         }
         else if(actual->getNombre() == id && actual == ultimo){
@@ -108,6 +116,7 @@ void agregarAlFinal(Cancion* nuevo){ //agrega una cancion al final de la lista c
             actual->setAnterior(NULL);
             actual->setSiguiente(NULL);
             actual->setPos(-1);
+            size--;
         }
         else{
             if(actual->getSiguiente() != NULL){
@@ -129,12 +138,14 @@ void agregarAlFinal(Cancion* nuevo){ //agrega una cancion al final de la lista c
                 actual->setSiguiente(NULL);
                 actual->setPos(-1);
                 eliminarPlayList(siguiente, id);
+                size--;
             }
             else{
                 actual->getAnterior()->setSiguiente(NULL);
                 actual->setAnterior(NULL);
                 actual->setSiguiente(NULL);
                 actual->setPos(-1);
+                size--;
             }
         }
         else if(actual->getPos() == id && actual == primero){
@@ -144,11 +155,13 @@ void agregarAlFinal(Cancion* nuevo){ //agrega una cancion al final de la lista c
                 actual->setSiguiente(NULL);
                 actual->setPos(-1);
                 eliminarPlayList(primero,id);
+                size--;
             }
             else{
                 actual->setAnterior(NULL);
                 actual->setSiguiente(NULL);
                 actual->setPos(-1);
+                size--;
             }
         }
         else if(actual->getPos() == id && actual == ultimo){
@@ -157,6 +170,7 @@ void agregarAlFinal(Cancion* nuevo){ //agrega una cancion al final de la lista c
             actual->setAnterior(NULL);
             actual->setSiguiente(NULL);
             actual->setPos(-1);
+            size--;
         }
         else{
             if(actual->getSiguiente() != NULL){

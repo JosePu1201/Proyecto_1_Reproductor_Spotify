@@ -11,119 +11,11 @@ using namespace tinyxml2;
 using namespace std;
 
 /*xmlotro*/
- 
-/*entrada de XML*/
-void xml(PlayListNormal* lisCan,ListaListas* listas){//Ingreso del XML
-    XMLDocument doc;
-    string direccion;
-
-    std::cout << "Ingresa la direccion del archivo de carga en formato XML" << std::endl;
-    cin.ignore();
-    getline(cin,direccion); // lectura del path
-    //std::cout << "sigue aca antes del load file" << std::endl;
-    doc.LoadFile(direccion.c_str());
-    //std::cout << "Despuesd del load file" << std::endl;
-    if(doc.Error()){//Verifica si hay un error del archivo
-        std::cout << "Error en la carga del archivo XML en la direccion: " <<direccion<< std::endl;
-        return;
-    }
-    //std::cout << "lee en espa pos: 1" << std::endl;
-    XMLElement* insert = doc.FirstChildElement("Insertar"); //<Insertar> </Insertar>
-    int vueltasInsert = 0;
-    while (insert != nullptr) //Recorre los insert
-    {
-        vueltasInsert++;
-        std::cout << "Vueltas del insert: " << vueltasInsert<< std::endl;
-        std::cout << "entra dentro del while insert" << std::endl;
-        XMLElement* cancion = insert->FirstChildElement("cancion");
-        int vCan = 0;
-        while(cancion != nullptr){
-            vCan++;
-            std::cout << "Vuelta de canciones: " <<vCan<< std::endl;
-            /*Variables para guardar info atrapada*/
-            string path;
-            string nombre;
-            string posId;
-            nombre = cancion->FirstChildElement("Nombre")->GetText();//obtiene el nombre
-            path = cancion->FirstChildElement("path")->GetText();//obtiene el path
-            XMLElement* pos = cancion->FirstChildElement("Pos");
-
-            if(pos != nullptr){ // obtiene la posicion en caso de que este
-                posId = pos->GetText();
-            }
-            if(!nombre.empty() && !path.empty()){
-                if(posId.empty()){
-                    Cancion* nuevaCan = new Cancion(nombre,path);
-                    nuevaCan->imprimir();
-                    lisCan->agregarAlFinal(nuevaCan);
-                }
-                else{
-                    Cancion* nuevaCan = new Cancion(nombre,path);
-                    nuevaCan->imprimir();
-                    lisCan->agregarAlFinal(nuevaCan);
-                }
-            }
-            else{
-                std::cout << "Todos los parametros deben de estar llenos " << std::endl;
-            }
-            cancion = cancion->NextSiblingElement("cancion");
-        }
-    /*
-        XMLElement* lista = insert->FirstChildElement("Lista");
-        while (lista != nullptr)
-        {
-            string nombreLista;
-            string desLista;
-
-            nombreLista = lista->FirstChildElement("Nombre")->GetText();
-            desLista = lista->FirstChildElement("Description")->GetText();
-            XMLElement* canciones = lista->FirstChildElement("Canciones");
-            if(!nombreLista.empty() && !desLista.empty()){//Agrega Lista sin canciones 
-                NodoListas* nuevo = new NodoListas();
-                nuevo->setNombre(nombreLista);
-                nuevo->setDes(desLista);
-                if(canciones != nullptr){ // Agrega lista con canciones 
-                XMLElement* cancionesEntrada = lista->FirstChildElement("pos");
-                while (cancionesEntrada != nullptr)
-                {
-                    int idCan = cancionesEntrada->IntText();
-                    Cancion* aux = lisCan->getPrimero();
-                    bool bandera = false;
-                    while (aux != nullptr && aux != NULL) //Agrega canciones a la lista
-                    {
-                        if(idCan == aux->getPos()){
-                            Cancion* otro = new Cancion(aux->getNombre(),aux->getPath());
-                            nuevo->getLista()->agregarAlFinal(otro);
-                            bandera = true;
-                        }
-                        aux = aux->getSiguiente();
-                    }
-                    if(!bandera){
-                        std::cout <<"La cancion no se encuetra en la store" << std::endl;
-                    }
-                    cancionesEntrada = cancionesEntrada->NextSiblingElement("pos");
-                }                    
-                }
-
-                
-
-                listas->agregarAlFinal(nuevo);
-            }
-            else{
-                std::cout << "Hay un campo vacio" << std::endl;
-            }
-
-            lista = lista->NextSiblingElement("Lista");
-        }
-        */
-        
-        insert = insert->NextSiblingElement("Insertar");
-    }
-    
-    //XMLElement *eliminar = doc.FirstChildElement("Eliminar");
-
+ void agregarCancion(string nombre, string path, PlayListNormal* canciones){
+    Cancion* nuevo = new Cancion(nombre,path);
+    canciones->agregarAlFinal(nuevo);
+    canciones->imprimirPos();
 }
-/*menu de operacion de cancionses */
 void Clear()
 {
     cout << "\x1B[2J\x1B[H";
@@ -302,8 +194,7 @@ void opCancion(PlayListNormal* lisCan){
             getline(cin,nombre);
             std::cout << "Ingresa la ubicacion en el disco" << std::endl;
             getline(cin,path);
-            Cancion* nuevo = new Cancion(nombre,path);
-            lisCan->agregarAlFinal(nuevo);
+            agregarCancion(nombre,path,lisCan);
             break;
             }
             
@@ -404,20 +295,20 @@ void rep(ListaListas* listas){
         std::cout << "2) Repetir" << std::endl;
         std::cout << "3) Regresar al menu principal" << std::endl;
         cin>>opCan;
-
+        PlayListNormal* nuevo;
+        NodoListas* aux = listas->getPrimero();
+        while (aux != NULL)
+        {
+            if(aux->getId() == id){
+                nuevo = aux->getLista();
+            }
+            aux = aux->getSiguiente();
+        }
         switch (opCan)
         {
         case 1:{
             int salir = 0;
-            PlayListNormal* nuevo;
-            NodoListas* aux = listas->getPrimero();
-            while (aux != NULL)
-            {
-                if(aux->getId() == id){
-                    nuevo = aux->getLista();
-                }
-                aux = aux->getSiguiente();
-            }
+
             if(nuevo->getPrimero() != NULL){
                 Cancion* aux1 = nuevo->getPrimero();
                 int dir;
@@ -448,31 +339,15 @@ void rep(ListaListas* listas){
         }
             break;
         case 2:{
-            int salir=0;
-            ListaCircular* nuevoCir = new ListaCircular(NULL);
-            PlayListNormal* nuevo;
-            NodoListas* aux = listas->getPrimero();
-            while (aux != NULL)
-            {
-                if(aux->getId() == id){
-                    nuevo = aux->getLista();
-                }
-                aux = aux->getSiguiente();
-            }
+            /*int salir=0;
+            ListaCircular* nuevoCir = new ListaCircular();
 
             Cancion* auxCan = nuevo->getPrimero();
             while (auxCan != NULL)
             {
-                if(nuevoCir == NULL){
-                    Cancion* canN = new Cancion(auxCan->getNombre(),auxCan->getPath());
-                    canN->setPos(auxCan->getPos());
-                    nuevoCir = new ListaCircular(canN);
-                }
-                else{
-                    Cancion* canN = new Cancion(auxCan->getNombre(),auxCan->getPath());
-                    canN->setPos(auxCan->getPos());
-                    nuevoCir->agregarFinal(canN);
-                }
+                Cancion* can = new Cancion(auxCan->getNombre(),auxCan->getPath());
+                can->setPos(auxCan->getPos());
+                nuevoCir->agregarFinal(can);
                 auxCan = auxCan->getSiguiente();
             }
             Cancion* auxCircular = nuevoCir->getInicio();
@@ -498,7 +373,7 @@ void rep(ListaListas* listas){
                 }
             }
             
-            
+            */
         }
             break;
         case 3:{
@@ -512,6 +387,108 @@ void rep(ListaListas* listas){
     }
 }
 
+
+/*entrada de XML*/
+void xml(PlayListNormal* lisCan,ListaListas* listas){//Ingreso del XML
+    XMLDocument doc;
+    string direccion;
+
+    std::cout << "Ingresa la direccion del archivo de carga en formato XML" << std::endl;
+    cin.ignore();
+    getline(cin,direccion); // lectura del path
+    doc.LoadFile(direccion.c_str());
+    if(doc.Error()){//Verifica si hay un error del archivo
+        std::cout << "Error en la carga del archivo XML en la direccion: " <<direccion<< std::endl;
+        return;
+    }
+    //std::cout << "lee en espa pos: 1" << std::endl;
+    XMLElement *insert = doc.FirstChildElement("Insertar"); //<Insertar> </Insertar>
+    int vueltasInsert = 0;
+    while (insert != nullptr) //Recorre los insert
+    {
+        vueltasInsert++;
+        std::cout << "Cancioens: " << std::endl;
+        XMLElement *cancioN = insert->FirstChildElement("cancion");
+        int vCan = 0;
+        while(cancioN != nullptr){
+            vCan++;
+            string path;
+            string nombre;
+            string posId;
+            nombre = cancioN->FirstChildElement("Nombre")->GetText();//obtiene el nombre
+            path = cancioN->FirstChildElement("path")->GetText();//obtiene el path
+            XMLElement* pos = cancioN->FirstChildElement("Pos");
+            if(pos != nullptr){ // obtiene la posicion en caso de que este
+                posId = pos->GetText();
+            }
+            if(!nombre.empty() && !path.empty()){
+                std::cout << "\tNombre: " <<nombre<<"\tPath: "<<path<< std::endl;
+            }
+            else{
+                std::cout << "Todos los parametros deben de estar llenos " << std::endl;
+            }
+            cancioN = cancioN->NextSiblingElement("cancion");
+        }
+        lisCan->imprimirPos();
+    
+        XMLElement* lista = insert->FirstChildElement("Lista");
+        while (lista != nullptr)
+        {
+            string nombreLista;
+            string desLista;
+
+            nombreLista = lista->FirstChildElement("Nombre")->GetText();
+            desLista = lista->FirstChildElement("Description")->GetText();
+            XMLElement* canciones = lista->FirstChildElement("Canciones");
+            if(!nombreLista.empty() && !desLista.empty()){//Agrega Lista sin canciones 
+                std::cout << "Nueva Lista de Reproduccion" << std::endl;
+                std::cout << "Nombre: " <<nombreLista<<"\tDescripcion: "<<desLista<<std::endl;
+                if(canciones != nullptr){ // Agrega lista con canciones
+                std::cout << "Posicion de canciones" << std::endl; 
+                XMLElement* cancionesEntrada = lista->FirstChildElement("pos");
+                while (cancionesEntrada != nullptr)
+                {
+                    cout <<cancionesEntrada->GetText()<<"-";
+                    cancionesEntrada = cancionesEntrada->NextSiblingElement("pos");
+                }
+                cout<<endl;                    
+                }
+                else{
+
+                }
+            }
+            else{
+                std::cout << "Hay un campo vacio" << std::endl;
+            }
+            lista = lista->NextSiblingElement("Lista");
+        }
+        insert = insert->NextSiblingElement("Insertar");
+    }
+    
+    XMLElement *eliminar = doc.FirstChildElement("Eliminar");
+    while (eliminar != nullptr){
+        std::cout << "ELiminar" << std::endl;
+        XMLElement *canciones = eliminar->FirstChildElement("cancion");
+        while (canciones != nullptr)
+        {
+            std::cout << "\tCancion" << std::endl;
+            XMLElement *id = canciones->FirstChildElement("id");
+            XMLElement *name = canciones->FirstChildElement("Nombre");
+            if(id != nullptr){
+                std::cout << "\t\tId: "<<id->GetText()<< std::endl;
+            }
+            if(name != nullptr){
+                std::cout << "\t\tNombre: " <<name->GetText()<< std::endl;
+            }
+            canciones = canciones->NextSiblingElement("cancion");
+        }
+        eliminar = eliminar->NextSiblingElement("Eliminar");
+    }
+        
+    }
+    
+
+/*menu de operacion de cancionses */
 
 
 int main(int argc, char *argv[])
